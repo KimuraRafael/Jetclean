@@ -16,4 +16,9 @@ public class VeiculoService {
     public List<Veiculo> findAll(){
         return veiculoRepository.findAll();
     }
+//
+//    public void saveVeiculo(Veiculo veiculo){
+//        veiculoRepository.save(veiculo);
+//        retur
+//    }
 }
