@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,9 +17,12 @@ public class VeiculoService {
     public List<Veiculo> findAll(){
         return veiculoRepository.findAll();
     }
-//
-//    public void saveVeiculo(Veiculo veiculo){
-//        veiculoRepository.save(veiculo);
-//        retur
-//    }
+    public Veiculo findById(UUID idVeiculo){
+        return veiculoRepository.findById(idVeiculo)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
+    }
+
+    public void saveVeiculo(Veiculo veiculo){
+        veiculoRepository.save(veiculo);
+    }
 }
