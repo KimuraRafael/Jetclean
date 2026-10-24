@@ -15,10 +15,10 @@ public record AgendamentoResponse(
     public static AgendamentoResponse from(AgendamentoLavagens agendamento) {
         return new AgendamentoResponse(
                 agendamento.getId(),
-                agendamento.getData_hora_lavagem(),
+                agendamento.getDataHoraLavagem(),
                 agendamento.getObservacao(),
-                VeiculoResponse.from(agendamento.getVeiculo_id()),
-                LavagemResponse.from(agendamento.getLavagem_id())
+                VeiculoResponse.from(agendamento.getVeiculo()),
+                LavagemResponse.from(agendamento.getLavagem())
         );
     }
 }

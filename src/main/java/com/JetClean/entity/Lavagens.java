@@ -31,7 +31,7 @@ public class Lavagens {
 
     @UpdateTimestamp
     @Column(name = "data_ultima_edicao", nullable = false)
-    private LocalDateTime data_ultima_edicao;
+    private LocalDateTime dataUltimaEdicao;
 
     public UUID getId() {
         return id;
@@ -57,11 +57,11 @@ public class Lavagens {
         this.preco = preco;
     }
 
-    public LocalDateTime getData_ultima_edicao() {
-        return data_ultima_edicao;
+    public LocalDateTime getDataUltimaEdicao() {
+        return dataUltimaEdicao;
     }
 
-    public void setData_ultima_edicao(LocalDateTime data_ultima_edicao) {
-        this.data_ultima_edicao = data_ultima_edicao;
+    public void setDataUltimaEdicao(LocalDateTime dataUltimaEdicao) {
+        this.dataUltimaEdicao = dataUltimaEdicao;
     }
 }

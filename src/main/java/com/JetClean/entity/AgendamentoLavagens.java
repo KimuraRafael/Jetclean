@@ -16,18 +16,18 @@ public class AgendamentoLavagens {
     private UUID id;
 
     @Column(name = "data_hora_lavagem", nullable = false)
-    private LocalDateTime data_hora_lavagem;
+    private LocalDateTime dataHoraLavagem;
 
     @Column(length = 500)
     private String observacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "veiculo_id")
-    private Veiculo veiculo_id;
+    private Veiculo veiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lavagem_id")
-    private Lavagens lavagem_id;
+    private Lavagens lavagem;
 
 
     public UUID getId() {
@@ -38,12 +38,12 @@ public class AgendamentoLavagens {
         this.id = id;
     }
 
-    public LocalDateTime getData_hora_lavagem() {
-        return data_hora_lavagem;
+    public LocalDateTime getDataHoraLavagem() {
+        return dataHoraLavagem;
     }
 
-    public void setData_hora_lavagem(LocalDateTime data_hora_lavagem) {
-        this.data_hora_lavagem = data_hora_lavagem;
+    public void setDataHoraLavagem(LocalDateTime dataHoraLavagem) {
+        this.dataHoraLavagem = dataHoraLavagem;
     }
 
     public String getObservacao() {
@@ -54,19 +54,19 @@ public class AgendamentoLavagens {
         this.observacao = observacao;
     }
 
-    public Veiculo getVeiculo_id() {
-        return veiculo_id;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setVeiculo_id(Veiculo veiculo_id) {
-        this.veiculo_id = veiculo_id;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public Lavagens getLavagem_id() {
-        return lavagem_id;
+    public Lavagens getLavagem() {
+        return lavagem;
     }
 
-    public void setLavagem_id(Lavagens lavagem_id) {
-        this.lavagem_id = lavagem_id;
+    public void setLavagem(Lavagens lavagem) {
+        this.lavagem = lavagem;
     }
 }

@@ -17,7 +17,7 @@ public record LavagemResponse(
                 lavagem.getId(),
                 lavagem.getDescricao(),
                 lavagem.getPreco(),
-                lavagem.getData_ultima_edicao()
+                lavagem.getDataUltimaEdicao()
         );
     }
 }
