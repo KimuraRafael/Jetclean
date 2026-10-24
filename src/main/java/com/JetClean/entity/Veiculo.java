@@ -15,13 +15,15 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-
     @Column
     @Enumerated(EnumType.STRING)
     private TipoVeiculo tipoVeiculo;
 
     @Column(nullable = false)
     private String cor;
+
+    @Column(nullable = false, unique = true, length = 10)
+    private String placa;
 
     @Column(nullable = false)
     private String modelo;
@@ -56,5 +58,13 @@ public class Veiculo {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 }

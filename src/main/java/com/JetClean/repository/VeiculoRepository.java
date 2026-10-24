@@ -8,4 +8,8 @@ import java.util.UUID;
 
 @Repository
 public interface VeiculoRepository extends JpaRepository<Veiculo, UUID> {
+
+    boolean existsByPlaca(String placa);
+
+    boolean existsByPlacaAndIdNot(String placa, UUID id);
 }
