@@ -3,6 +3,9 @@ package com.JetClean.service;
 import com.JetClean.dto.LavagemRequest;
 import com.JetClean.dto.LavagemResponse;
 import com.JetClean.entity.Lavagens;
+import com.JetClean.exception.RecursoNaoEncontradoException;
+import com.JetClean.exception.RegraNegocioException;
+import com.JetClean.repository.AgendamentoRepository;
 import com.JetClean.repository.LavagensRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class LavagensService {
 
    private final LavagensRepository lavagensRepository;
+   private final AgendamentoRepository agendamentoRepository;
 
    public List<Lavagens> findAll(){
        return lavagensRepository.findAll();
@@ -22,7 +26,7 @@ public class LavagensService {
 
    public Lavagens findById(UUID idLavagem){
        return lavagensRepository.findById(idLavagem)
-               .orElseThrow(() -> new RuntimeException("Lavagem não encontrada"));
+               .orElseThrow(() -> new RecursoNaoEncontradoException("Lavagem não encontrada"));
    }
 
    public LavagemResponse saveLavagem(LavagemRequest request){
@@ -44,6 +48,9 @@ public class LavagensService {
 
    public void deleteById(UUID id){
        Lavagens lavagem = findById(id);
+       if(agendamentoRepository.existsByLavagemId(id)){
+           throw new RegraNegocioException("Essa lavagem possui agendamentos e não pode ser excluída");
+       }
        lavagensRepository.delete(lavagem);
    }
 }

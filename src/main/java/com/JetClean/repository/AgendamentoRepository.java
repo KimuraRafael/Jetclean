@@ -11,4 +11,7 @@ public interface AgendamentoRepository extends JpaRepository <AgendamentoLavagen
 
     @EntityGraph(attributePaths = {"veiculo", "lavagem"})
     List<AgendamentoLavagens> findAllByOrderByDataHoraLavagemAsc();
+
+    boolean existsByVeiculoId(UUID veiculoId);
+    boolean existsByLavagemId(UUID lavagemId);
 }

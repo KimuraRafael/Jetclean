@@ -27,8 +27,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/veiculos/{id}")
-    public Veiculo getVeiculoByID(@PathVariable UUID id) {
-        return veiculoService.findById(id);
+    public ResponseEntity<Veiculo> getVeiculoByID(@PathVariable UUID id) {
+        return  ResponseEntity.ok(veiculoService.findById(id));
     }
 
     @PostMapping("/veiculos/cadastro")
@@ -38,7 +38,7 @@ public class VeiculoController {
     }
 
     @PutMapping("/veiculos/{id}")
-    public VeiculoResponse editVeiculo(@PathVariable UUID id, @RequestBody @Valid VeiculoRequest veiculoAtualizado){return veiculoService.editVeiculo(id, veiculoAtualizado);}
+    public ResponseEntity<VeiculoResponse> editVeiculo(@PathVariable UUID id, @RequestBody @Valid VeiculoRequest veiculoAtualizado){return ResponseEntity.ok(veiculoService.editVeiculo(id, veiculoAtualizado));}
 
     @DeleteMapping(("/veiculos/{id}"))
     public ResponseEntity<Void>deleteVeiculoById(@PathVariable UUID id){

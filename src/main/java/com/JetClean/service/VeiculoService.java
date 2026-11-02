@@ -1,8 +1,11 @@
 package com.JetClean.service;
 
+import com.JetClean.exception.RecursoNaoEncontradoException;
+import com.JetClean.exception.RegraNegocioException;
 import com.JetClean.dto.VeiculoRequest;
 import com.JetClean.dto.VeiculoResponse;
 import com.JetClean.entity.Veiculo;
+import com.JetClean.repository.AgendamentoRepository;
 import com.JetClean.repository.VeiculoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class VeiculoService {
 
     private final VeiculoRepository veiculoRepository;
+    private final AgendamentoRepository agendamentoRepository;
 
     public List<Veiculo> findAll() {
         return veiculoRepository.findAll();
@@ -22,7 +26,7 @@ public class VeiculoService {
 
     public Veiculo findById(UUID idVeiculo) {
         return veiculoRepository.findById(idVeiculo)
-                .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Veículo não encontrado"));
     }
 
     public VeiculoResponse saveVeiculo(VeiculoRequest request) {
@@ -30,7 +34,7 @@ public class VeiculoService {
 
 
         if (veiculoRepository.existsByPlaca(request.placa())) {
-            throw new RuntimeException("Já existe um veículo com a placa " + request.placa());
+            throw new RegraNegocioException("Já existe um veículo com a placa " + request.placa());
         }
         veiculo.setTipoVeiculo(request.tipoVeiculo());
         veiculo.setCor(request.cor());
@@ -45,7 +49,7 @@ public class VeiculoService {
         Veiculo veiculo = findById(id);
 
         if (veiculoRepository.existsByPlacaAndIdNot(request.placa(),id)) {
-            throw new RuntimeException("Já existe um veículo com a placa" + request.placa());
+            throw new RegraNegocioException("Já existe um veículo com a placa: " + request.placa());
         }
 
         veiculo.setTipoVeiculo(request.tipoVeiculo());
@@ -58,6 +62,9 @@ public class VeiculoService {
 
     public void deleteById(UUID id) {
         Veiculo veiculo = findById(id);
+        if(agendamentoRepository.existsByVeiculoId(id)){
+            throw new RegraNegocioException("Veículo possui agendamentos e não pode ser excluído");
+        }
         veiculoRepository.delete(veiculo);
     }
 

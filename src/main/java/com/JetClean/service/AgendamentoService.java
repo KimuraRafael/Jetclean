@@ -5,6 +5,7 @@ import com.JetClean.dto.AgendamentoResponse;
 import com.JetClean.entity.AgendamentoLavagens;
 import com.JetClean.entity.Lavagens;
 import com.JetClean.entity.Veiculo;
+import com.JetClean.exception.RecursoNaoEncontradoException;
 import com.JetClean.repository.AgendamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class AgendamentoService {
 
     public AgendamentoLavagens findById(UUID id) {
         return agendamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Agendamento não encontrado"));
     }
 
     @Transactional(readOnly = true)
