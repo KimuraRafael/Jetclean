@@ -1,12 +1,15 @@
 package com.JetClean.controller;
 
+import com.JetClean.config.TokenComponent;
 import com.JetClean.dto.LoginRequest;
+import com.JetClean.dto.LoginResponse;
 import com.JetClean.dto.UsuarioRequest;
 import com.JetClean.dto.UsuarioResponse;
 import com.JetClean.entity.Usuario;
 import com.JetClean.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.Token;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UsuarioService usuarioService;
+    private final TokenComponent tokenComponent;
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
@@ -32,12 +36,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> saveUsuario(@RequestBody @Valid LoginRequest request){
+    public ResponseEntity<LoginResponse> saveUsuario(@RequestBody @Valid LoginRequest request){
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.senha());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
 
         Usuario usuario = (Usuario) authentication.getPrincipal();
+        String token = tokenComponent.generateToken(usuario);
 
-
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }
