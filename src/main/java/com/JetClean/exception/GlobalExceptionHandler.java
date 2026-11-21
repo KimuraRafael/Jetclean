@@ -3,6 +3,7 @@ package com.JetClean.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -38,5 +39,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErroResponse> jsonInvalido(HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest()
                 .body(new ErroResponse(400, "JSON inválido ou valor não permitido", null));
+    }
+
+
+    @ExceptionHandler(UsernameOrPasswordInvalidException.class)
+    public ResponseEntity<ErroResponse> credenciaisInvalidas(UsernameOrPasswordInvalidException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(new ErroResponse(401, ex.getMessage(), null));
     }
 }
